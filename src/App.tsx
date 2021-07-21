@@ -1,17 +1,22 @@
+import { NotFound } from 'components/common';
+import { AdminLayout } from 'components/layout';
+import { LoginPage } from 'features/auth/pages/LoginPage';
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import { Switch, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 function App() {
   return (
     <div>
       <Switch>
-        <Route path="/login"></Route>
-        <Route path="/admin"></Route>
+        <Route path="/login">
+          <LoginPage/>
+        </Route>
+        <Route path="/admin">
+          <AdminLayout/>
+        </Route>
         <Route>
-          {/* NOT FOUND */}
+          <NotFound/>
         </Route>
       </Switch>
     </div>
