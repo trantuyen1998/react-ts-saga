@@ -1,4 +1,4 @@
-import { NotFound } from 'components/common';
+import { NotFound, PrivateRoute } from 'components/common';
 import { AdminLayout } from 'components/layout';
 import { LoginPage } from 'features/auth/pages/LoginPage';
 import React from 'react';
@@ -12,9 +12,9 @@ function App() {
         <Route path="/login">
           <LoginPage/>
         </Route>
-        <Route path="/admin">
+        <PrivateRoute path="/admin">
           <AdminLayout/>
-        </Route>
+        </PrivateRoute>
         <Route>
           <NotFound/>
         </Route>
