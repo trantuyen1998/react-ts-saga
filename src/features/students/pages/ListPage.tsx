@@ -14,8 +14,9 @@ import { useEffect } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import StudentFilters from "../components/StudentFilters";
 import StudentTable from "../components/StudentTable";
+import { toast } from "react-toastify";
 import {
-    selectStudentFilter,
+  selectStudentFilter,
   selectStudentList,
   selectStudentLoading,
   selectStudentPagination,
@@ -45,27 +46,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function ListPage() {
   const match = useRouteMatch();
-  const history = useHistory()
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const studentList = useAppSelector(selectStudentList);
   const pagination = useAppSelector(selectStudentPagination);
-  const cityMap = useAppSelector(selectCityMap)
-  const cityList = useAppSelector(selectCityList)
+  const cityMap = useAppSelector(selectCityMap);
+  const cityList = useAppSelector(selectCityList);
 
   const loading = useAppSelector(selectStudentLoading);
-  const filter = useAppSelector(selectStudentFilter)
+  const filter = useAppSelector(selectStudentFilter);
   useEffect(() => {
-    dispatch(
-      studentActions.fetchStudentList(filter)
-    );
+    dispatch(studentActions.fetchStudentList(filter));
   }, [dispatch, filter]);
-  
+
   const handlePageChange = (e: any, page: number) => {
-      dispatch(studentActions.setFilter({
-          ...filter,
-          _page: page
-      }))
+    dispatch(
+      studentActions.setFilter({
+        ...filter,
+        _page: page,
+      })
+    );
   };
 
   const handleSearchChange = (newFilter: ListParams) => {
@@ -78,23 +79,22 @@ export default function ListPage() {
   const handleRemoveStudent = async (student: Student) => {
     try {
       // Remove student API
-      await studentApi.remove(student?.id || '');
+      await studentApi.remove(student?.id || "");
 
-      // toast.success('Remove student successfully!');
+      toast.success("Remove student successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
       dispatch(studentActions.setFilter(newFilter));
     } catch (error) {
       // Toast error
-      console.log('Failed to fetch student', error);
+      console.log("Failed to fetch student", error);
     }
   };
 
   const handleEditStudent = async (student: Student) => {
     history.push(`${match.url}/${student.id}`);
   };
-
 
   return (
     <Box>
@@ -117,7 +117,12 @@ export default function ListPage() {
         />
       </Box>
 
-      <StudentTable studentList={studentList} cityMap = {cityMap} onRemove={handleRemoveStudent} onEdit={handleEditStudent}/>
+      <StudentTable
+        studentList={studentList}
+        cityMap={cityMap}
+        onRemove={handleRemoveStudent}
+        onEdit={handleEditStudent}
+      />
 
       <Box my={2} display="flex" justifyContent="center">
         <Pagination

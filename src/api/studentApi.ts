@@ -14,9 +14,9 @@ const studentApi = {
     const url = "/students";
     return axiosClient.get(url, { params });
   },
-  update(params: Student): Promise<Student> {
-    const url = "/students";
-    return axiosClient.get(url, { params });
+  update(params: Partial<Student>): Promise<Student> {
+    const url = `/students/${params.id}`;
+    return axiosClient.patch(url, { params });
   },
   remove(id: string): Promise<ListReponse<Student>> {
     const url = `/students/${id}`;

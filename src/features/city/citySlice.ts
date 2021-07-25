@@ -50,6 +50,7 @@ export const selectCityOptions = createSelector(selectCityList, (cityList) =>
   }))
 );
 
+
 // Reducer
 const cityReducer = citySlice.reducer;
 export default cityReducer;
